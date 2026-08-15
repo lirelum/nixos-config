@@ -21,7 +21,5 @@
     disko.devices.disk.main.imageSize = "30G";
 
 
-    services.displayManager.autoLogin.enable = true;
-    services.displayManager.autoLogin.user = "autumn";
   };
 }
