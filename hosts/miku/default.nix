@@ -6,7 +6,17 @@
 }:
 {
 
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "nodev";
+
   time.timeZone = "America/New_York";
+
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  console.useXkbConfig = true;
 
   imports =
     lib.optional (builtins.pathExists ./hardware-configuration.nix) ./hardware-configuration.nix
@@ -24,8 +34,12 @@
     extraPackages = with pkgs; [ rocmPackages.clr.icd ];
   };
 
-  #my.home.enable = true;
+  my.home.enable = true;
   my.users.autumn.enable = true;
+  my.audio.enable = true;
+  my.networking.enable = true;
+  my.bluetooth.enable = true;
+  my.gnome.enable = true;
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
