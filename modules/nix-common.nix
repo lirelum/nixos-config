@@ -12,7 +12,7 @@
         "nix-command"
         "flakes"
       ];
-      auto-optimise-store = true;
+      optimise.automatic = true;
       trusted-users = [
         "root"
         "@wheel"

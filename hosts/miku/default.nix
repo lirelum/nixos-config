@@ -6,8 +6,12 @@
 }:
 {
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "nodev";
+  networking.hostName = "miku";
+
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
 
   time.timeZone = "America/New_York";
 
