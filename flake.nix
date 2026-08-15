@@ -23,7 +23,14 @@
     }@inputs:
     let
       systems = [ "x86_64-linux" ];
-      lib = import ./lib.nix { inherit systems nixpkgs self inputs; };
+      lib = import ./lib.nix {
+        inherit
+          systems
+          nixpkgs
+          self
+          inputs
+          ;
+      };
     in
     {
       devShells = lib.forAllSystems (

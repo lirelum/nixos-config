@@ -1,11 +1,20 @@
-{ lib, pkgs, inputs, ... }: {
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
+{
 
   time.timeZone = "America/New_York";
 
   imports =
     lib.optional (builtins.pathExists ./hardware-configuration.nix) ./hardware-configuration.nix
     ++ lib.optional (builtins.pathExists ./vm-configuration.nix) ./vm-configuration.nix
-    ++ [inputs.disko.nixosModules.disko ./disko-config.nix];
+    ++ [
+      inputs.disko.nixosModules.disko
+      ./disko-config.nix
+    ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
 

@@ -1,4 +1,11 @@
-{lib, config, pkgs, outputs, ...}: {
+{
+  lib,
+  config,
+  pkgs,
+  outputs,
+  ...
+}:
+{
   options = {
     my.users.autumn.enable = lib.mkEnableOption "user autumn";
   };
@@ -18,7 +25,7 @@
       shell = pkgs.zsh;
     };
     programs.zsh.enable = lib.mkIf config.my.users.autumn.enable true;
-    
+
     home-manager = lib.mkIf config.my.home.enable {
       users.autumn = lib.mkIf config.my.users.autumn.enable {
         imports = builtins.attrValues outputs.homeModules;
