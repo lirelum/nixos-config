@@ -13,7 +13,7 @@
         "flakes"
       ];
       auto-optimise-store = true;
-      trsuted-users = [
+      trusted-users = [
         "root"
         "@wheel"
       ];
