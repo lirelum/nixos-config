@@ -46,10 +46,6 @@
                     swapfile.path = "swapfile";
                   };
                 };
-                "@var_log" = {
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                  mountpoint = "/var/log";
-                };
               };
             };
           };
