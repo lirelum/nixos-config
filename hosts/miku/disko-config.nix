@@ -11,11 +11,8 @@
         type = "gpt";
         partitions = {
           ESP = {
-            priority = 1;
             name = "ESP";
-            start = "1M";
-            end = "2G";
-
+            size = "2G";
             type = "EF00";
             content = {
               type = "filesystem";
