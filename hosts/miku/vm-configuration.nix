@@ -14,6 +14,7 @@
     virtualisation = {
       memorySize = 4096;
       cores = 4;
+      fileSystems."/home".neededForBoot=true;
     };
 
     _module.args.disks = lib.mkForce ["/dev/vda"];
