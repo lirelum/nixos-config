@@ -1,5 +1,5 @@
 # FIXME make things more modular later
-{lib, ...}: {
+{ lib, ... }: {
   virtualisation.vmVariantWithDisko = {
     services.qemuGuest.enable = true;
     services.spice-vdagentd.enable = true;
@@ -14,12 +14,11 @@
     virtualisation = {
       memorySize = 4096;
       cores = 4;
-      fileSystems."/home".neededForBoot=true;
+      fileSystems."/home".neededForBoot = true;
     };
 
-    _module.args.disks = lib.mkForce ["/dev/vda"];
+    _module.args.disks = lib.mkForce [ "/dev/vda" ];
     disko.devices.disk.main.imageSize = "30G";
-
 
   };
 }

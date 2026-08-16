@@ -13,8 +13,8 @@
     (lib.mkIf config.my.users.autumn.enable {
       users.users.autumn = {
         isNormalUser = true;
-        
-        initialPassword =  "changeme";
+
+        initialPassword = "changeme";
 
         description = "Autumn";
 
