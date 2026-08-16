@@ -5,11 +5,14 @@
   ...
 }:
 {
+  
+  _module.args.disks = ["/dev/nvme0n1"];
 
   networking.hostName = "miku";
 
   boot.loader = {
     systemd-boot.enable = true;
+    efi.efiSysMountPoint = "/efi";
     efi.canTouchEfiVariables = true;
   };
 
