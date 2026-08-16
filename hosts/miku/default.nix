@@ -47,6 +47,7 @@
   my.networking.enable = true;
   my.bluetooth.enable = true;
   my.gnome.enable = true;
+  my.gaming.enable = true;
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
