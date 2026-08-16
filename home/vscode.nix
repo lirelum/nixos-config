@@ -7,6 +7,7 @@
       mkhl.direnv
     ];
     userSettings = {
+      "files.autoSave" = "onFocusChange";
       "chat.disableAIFeatures" = true;
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nixd";
