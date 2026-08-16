@@ -6,7 +6,7 @@
       jnoortheen.nix-ide
       mkhl.direnv
     ];
-    userSettings = {
+    profiles.default.userSettings = {
       "editor.formatOnSave" = true;
       "editor.formatOnSaveMode" = "file";
       "files.autoSave" = "onFocusChange";
