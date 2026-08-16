@@ -1,7 +1,7 @@
 { lib, config, ... }: {
   options.my.audio.enable = lib.mkEnableOption "audio";
   config = lib.mkIf config.my.audio.enable {
-    hardware.pulseaudio.enable = false;
+    services.pulseaudio.enable = false;
 
     security.rtkit.enable = true;
 
