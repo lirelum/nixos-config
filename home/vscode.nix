@@ -7,10 +7,14 @@
       mkhl.direnv
     ];
     userSettings = {
+      "editor.formatOnSave" = true;
+      "editor.formatOnSaveMode" = "file";
       "files.autoSave" = "onFocusChange";
       "chat.disableAIFeatures" = true;
+      "git.confirmSync" = false;
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nixd";
+      "nix.formatterPath" = "nixfmt";
       "nix.serverSettings"."nil"."formatting" = {
         "command" = [ "nixfmt" ];
       };
