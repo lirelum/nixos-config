@@ -1,3 +1,3 @@
-{ packages }: prev: final: {
-  local = packages.${prev.system};
+{ packages }: final: prev: {
+  local = packages.${prev.stdenv.hostPlatform.system};
 }
