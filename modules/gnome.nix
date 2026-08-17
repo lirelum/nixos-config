@@ -14,6 +14,7 @@
       gnome-tweaks
       gnomeExtensions.fullscreen-avoider
       gnomeExtensions.appindicator
+      gnomeExtensions.kimpanel
       adwaita-qt
       adwaita-qt6
     ];
