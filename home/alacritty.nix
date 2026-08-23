@@ -1,8 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs.alacritty = {
     enable = true;
     settings = {
-      terminal.shell = "${pkgs.zellij}";
+      terminal.shell.program = "${lib.getExe pkgs.zellij}";
     };
   };
 }

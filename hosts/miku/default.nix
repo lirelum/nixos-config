@@ -41,14 +41,6 @@
     extraPackages = with pkgs; [ rocmPackages.clr.icd ];
   };
 
-  my.home.enable = true;
-  my.users.autumn.enable = true;
-  my.audio.enable = true;
-  my.networking.enable = true;
-  my.bluetooth.enable = true;
-  my.gnome.enable = true;
-  my.gaming.enable = true;
-
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   boot.initrd.kernelModules = [ "amdgpu" ];

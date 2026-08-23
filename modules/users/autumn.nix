@@ -1,11 +1,7 @@
+{ pkgs, outputs, ... }:
 {
-  pkgs,
-  config,
-  lib,
-  outputs,
-  ...
-}:
-{
+  imports = [ ../home.nix ];
+
   users.users.autumn = {
     isNormalUser = true;
 
@@ -24,10 +20,8 @@
   };
   programs.zsh.enable = true;
 
-  home-manager = lib.mkIf config.my.home.enable {
-    users.autumn = {
-      imports = builtins.attrValues outputs.homeModules;
-      programs.zsh.enable = true;
-    };
+  home-manager.users.autumn = {
+    imports = builtins.attrValues outputs.homeModules;
+    programs.zsh.enable = true;
   };
 }

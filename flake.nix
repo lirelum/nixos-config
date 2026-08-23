@@ -56,7 +56,7 @@
         }
       );
 
-      nixosModules = lib.getModules "${self}/modules" // lib.getFeatures "${self}/features";
+      nixosModules = lib.getModules "${self}/modules";
 
       homeModules = lib.getModules "${self}/home";
 
@@ -67,7 +67,18 @@
       packages = lib.forAllSystems (system: pkgs: import ./packages { inherit pkgs; });
 
       nixosConfigurations = {
-        miku = lib.mkHost "${self}/hosts/miku";
+        miku = lib.mkHost "${self}/hosts/miku" (
+          with self.outputs.nixosModules;
+          [
+            audio
+            bluetooth
+            networking
+            gnome
+            gaming
+            home
+            users
+          ]
+        );
       };
     };
 }
