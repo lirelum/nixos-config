@@ -40,14 +40,18 @@
       devShells = lib.forAllSystems (
         system: pkgs: {
           default = pkgs.mkShell {
-            packages = with pkgs; [
-              nixd
-              nixfmt
-              statix
-              deadnix
-              nix-tree
-              nix-diff
-            ];
+            packages = (
+              with pkgs;
+              [
+                nixd
+                nixfmt
+                statix
+                deadnix
+                nix-tree
+                nix-diff
+              ]
+            )
+            ++ builtins.attrValues self.packages.${system};
           };
         }
       );
@@ -59,6 +63,8 @@
       formatter = lib.forAllSystems (system: pkgs: pkgs.nixfmt-tree);
 
       overlays = import ./overlays { inherit inputs; };
+
+      packages = lib.forAllSystems (system: pkgs: import ./packages { inherit pkgs; });
 
       nixosConfigurations = {
         miku = lib.mkHost "${self}/hosts/miku";
