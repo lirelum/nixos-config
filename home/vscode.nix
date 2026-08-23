@@ -5,6 +5,7 @@
       vscodevim.vim
       jnoortheen.nix-ide
       mkhl.direnv
+      ms-ceintl.vscode-language-pack-ja
     ];
     profiles.default.userSettings = {
       "editor.formatOnSave" = true;
