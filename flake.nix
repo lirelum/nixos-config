@@ -52,15 +52,13 @@
         }
       );
 
-      nixosModules = lib.getModules "${self}/modules";
+      nixosModules = lib.getModules "${self}/modules" // lib.getFeatures "${self}/features";
 
       homeModules = lib.getModules "${self}/home";
 
       formatter = lib.forAllSystems (system: pkgs: pkgs.nixfmt-tree);
 
       overlays = import ./overlays { inherit inputs; };
-
-      packages = lib.forAllSystems (system: pkgs: import ./packages { inherit pkgs; });
 
       nixosConfigurations = {
         miku = lib.mkHost "${self}/hosts/miku";
