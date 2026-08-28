@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     anki
-    claude-code
+    unstable.opencode
     nicotine-plus
   ];
 }
