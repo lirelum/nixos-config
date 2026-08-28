@@ -9,7 +9,9 @@
 # 使い方: diff-system-closure [old-ref] [new-ref] [host]
 #   old-ref  比較元の git ref (デフォルト: HEAD)
 #   new-ref  比較先の git ref。未コミットの作業ツリーは "." (デフォルト: .)
-#   host     nixosConfigurations.<host>。1つだけなら自動検出する
+#   host     nixosConfigurations.<host>。省略時は /etc/hostname から現在の
+#            ホスト名を推測し、flake に存在すればそれを使う。無ければ
+#            ホストが1つだけの場合に限り自動検出する
 set -euo pipefail
 
 repo="$(git rev-parse --show-toplevel)"
@@ -33,11 +35,24 @@ if [[ -z "$host" ]]; then
   hosts="$(nix eval "$new_flake#nixosConfigurations" \
     --apply 'a: builtins.concatStringsSep " " (builtins.attrNames a)' --raw)"
   read -r -a host_list <<<"$hosts"
-  if [[ "${#host_list[@]}" -ne 1 ]]; then
-    printf 'Multiple hosts found (%s); pass one as the third argument.\n' "$hosts" >&2
-    exit 2
+
+  if [[ -r /etc/hostname ]]; then
+    read -r local_host < /etc/hostname
+    for h in "${host_list[@]}"; do
+      if [[ "$h" == "$local_host" ]]; then
+        host="$local_host"
+        break
+      fi
+    done
   fi
-  host="${host_list[0]}"
+
+  if [[ -z "$host" ]]; then
+    if [[ "${#host_list[@]}" -ne 1 ]]; then
+      printf 'Multiple hosts found (%s); pass one as the third argument.\n' "$hosts" >&2
+      exit 2
+    fi
+    host="${host_list[0]}"
+  fi
 fi
 
 attr="nixosConfigurations.$host.config.system.build.toplevel.drvPath"
