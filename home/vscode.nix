@@ -16,7 +16,7 @@
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nixd";
       "nix.formatterPath" = "nixfmt";
-      "nix.serverSettings"."nil"."formatting" = {
+      "nix.serverSettings"."nixd"."formatting" = {
         "command" = [ "nixfmt" ];
       };
     };

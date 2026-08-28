@@ -5,8 +5,6 @@
   users.users.autumn = {
     isNormalUser = true;
 
-    initialPassword = "changeme";
-
     description = "Autumn";
 
     extraGroups = [

@@ -33,8 +33,6 @@
       ./disko-config.nix
     ];
 
-  nixpkgs.hostPlatform.system = "x86_64-linux";
-
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
