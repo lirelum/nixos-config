@@ -1,33 +1,39 @@
 #!/usr/bin/env bash
-# Build a host's system toplevel at two git refs and diff the resulting store
-# closures, to confirm a refactor didn't change what actually gets built.
+# 2つの git ref でホストの system toplevel をビルドし、生成されたストアの
+# クロージャを diff することで、リファクタリングによって実際にビルドされる
+# ものが変わっていないかを確認する。
 #
-# `nix store diff-closures` alone isn't enough for this: it's a name+version
-# heuristic over store-path basenames, not a content diff, so it can go quiet
-# on paths that don't parse as a recognizable package (etc/nix/registry.json,
-# activate, switch-to-configuration, ...) regardless of whether they actually
-# differ. Every NixOS system closure also embeds its own store path in several
-# generated files (activate, switch-to-configuration, boot.json, ...), so two
-# builds that are behaviorally identical will still differ there byte-for-byte
-# purely from that unavoidable self-reference.
+# これには `nix store diff-closures` だけでは不十分: これはストアパスの
+# basename に対する名前+バージョンのヒューリスティックであり、内容の diff
+# ではない。そのため、認識可能なパッケージとしてパースできないパス
+# (etc/nix/registry.json, activate, switch-to-configuration, ...) では、
+# 実際に差分があるかどうかに関わらず何も検出されないことがある。また、
+# すべての NixOS システムクロージャは、いくつかの生成ファイル
+# (activate, switch-to-configuration, boot.json, ...) の中に自分自身の
+# ストアパスを埋め込んでいるため、動作的には同一の2つのビルドであっても、
+# この避けようのない自己参照だけが原因でバイト単位では差分が生じてしまう。
 #
-# So this combines two checks. diff-closures still does the package-level job
-# it's actually good at (an added/removed/version-bumped package, like the
-# whole `sw` profile symlink pointing at a different system-path derivation
-# because a package was added - normalizing that symlink's target away would
-# be wrong, since the hash difference IS the signal there). Separately, this
-# script does its own byte diff of only the toplevel's own directly-generated
-# *regular* files (not symlinks - those point at other derivations already
-# covered by diff-closures), normalizing away /nix/store/<hash>- prefixes
-# first so the files' unavoidable self-reference doesn't look like a real
-# difference. Something is only reported clean if both checks are.
+# そこでこのスクリプトは2つのチェックを組み合わせる。diff-closures には
+# 引き続き、それが本来得意とするパッケージレベルの仕事
+# (パッケージの追加/削除/バージョン変更、たとえばパッケージが追加された
+# ことで `sw` プロファイルのシンボリックリンク全体が別の system-path
+# 導出を指すようになる場合など - このシンボリックリンクのリンク先を
+# 正規化して差分を消してしまうのは誤りで、そのハッシュの違いこそが
+# ここでのシグナルそのものだから)を任せる。それとは別に、このスクリプトは
+# toplevel が直接生成する*通常ファイル*(シンボリックリンクは除く -
+# それらは別の導出を指しており、すでに diff-closures がカバー済み)
+# についてのみ、独自にバイト単位の diff を行う。その際まず
+# /nix/store/<hash>- というプレフィックスを正規化して取り除き、
+# ファイルの避けようのない自己参照が実際の差分に見えてしまわないように
+# する。両方のチェックがクリーンな場合にのみ「差分なし」と報告される。
 #
-# Usage: diff-system-closure.sh [old-ref] [new-ref] [host]
-#   old-ref  git ref to build "before" from (default: HEAD)
-#   new-ref  git ref to build "after" from, or "." for the working tree
-#            as-is, including uncommitted changes (default: .)
-#   host     nixosConfigurations.<host> to build (default: autodetected if
-#            there's exactly one)
+# 使い方: diff-system-closure.sh [old-ref] [new-ref] [host]
+#   old-ref  「変更前」をビルドする git ref (デフォルト: HEAD)
+#   new-ref  「変更後」をビルドする git ref。作業ツリーをコミットしていない
+#            変更も含めてそのままビルドする場合は "." を指定
+#            (デフォルト: .)
+#   host     ビルド対象の nixosConfigurations.<host>
+#            (デフォルト: 該当するホストが1つだけの場合は自動検出)
 set -euo pipefail
 
 repo="$(git rev-parse --show-toplevel)"
@@ -85,11 +91,13 @@ normalize() {
   sed -E 's#/nix/store/[0-9a-z]{32}-#/nix/store/HASH-#g'
 }
 
-# Relative paths of the toplevel's own directly-generated regular files, NOT
-# following symlinks - those point at other derivations (packages, etc/, the
-# kernel, ...) whose content is diff-closures' job, not a byte-for-byte diff
-# here, and normalizing a symlink's target hash away would wrongly hide a
-# real change (the target hash differing IS the signal, unlike inline text).
+# toplevel が直接生成する通常ファイルの相対パス。シンボリックリンクは
+# たどらない - それらは別の導出 (パッケージ, etc/, カーネル, ...) を
+# 指しており、その内容の diff は diff-closures の仕事であって、ここで
+# バイト単位の diff をする対象ではない。また、シンボリックリンクの
+# リンク先ハッシュを正規化して消してしまうと、本物の変更を誤って
+# 隠してしまう(インラインのテキストとは違い、リンク先ハッシュの違い
+# こそがここでのシグナルそのものである)。
 list_regular_files() {
   find "$1" -type f -printf '%P\0'
 }
