@@ -5,6 +5,7 @@
     runtimeInputs = [
       pkgs.git
       pkgs.nix
+      pkgs.nix-diff
     ];
     text = builtins.readFile ../scripts/diff-system-closure.sh;
   };

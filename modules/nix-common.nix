@@ -2,7 +2,8 @@
   nix = {
     enable = true;
     channel.enable = false;
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    # Registering self would make every source revision change the system closure.
+    registry = lib.mapAttrs (_: value: { flake = value; }) (lib.removeAttrs inputs [ "self" ]);
     gc = {
       automatic = true;
       dates = "weekly";
