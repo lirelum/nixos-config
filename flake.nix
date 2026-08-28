@@ -40,18 +40,16 @@
       devShells = lib.forAllSystems (
         system: pkgs: {
           default = pkgs.mkShell {
-            packages = (
-              with pkgs;
-              [
+            packages =
+              (with pkgs; [
                 nixd
                 nixfmt
                 statix
                 deadnix
                 nix-tree
                 nix-diff
-              ]
-            )
-            ++ builtins.attrValues self.packages.${system};
+              ])
+              ++ builtins.attrValues self.packages.${system};
           };
         }
       );
@@ -75,10 +73,26 @@
             networking
             gnome
             gaming
-            home
             users
           ]
         );
+      };
+
+      homeConfigurations.autumn = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          overlays = builtins.attrValues self.outputs.overlays;
+          config.allowUnfree = true;
+        };
+        modules = with self.outputs.homeModules; [
+          autumn
+          cli
+          desktop
+        ];
+        extraSpecialArgs = {
+          inherit inputs;
+          outputs = self.outputs;
+        };
       };
     };
 }
