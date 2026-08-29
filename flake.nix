@@ -78,21 +78,5 @@
         );
       };
 
-      homeConfigurations.autumn = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "x86_64-linux";
-          overlays = builtins.attrValues self.outputs.overlays;
-          config.allowUnfree = true;
-        };
-        modules = with self.outputs.homeModules; [
-          autumn
-          cli
-          desktop
-        ];
-        extraSpecialArgs = {
-          inherit inputs;
-          outputs = self.outputs;
-        };
-      };
     };
 }
