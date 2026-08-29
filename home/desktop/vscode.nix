@@ -7,7 +7,7 @@
       mkhl.direnv
       ms-ceintl.vscode-language-pack-ja
       rust-lang.rust-analyzer
-      bungcip.better-toml
+      tamasfe.even-better-toml
     ];
     profiles.default.userSettings = {
       "editor.formatOnSave" = true;
