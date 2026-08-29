@@ -49,7 +49,10 @@
                 nix-tree
                 nix-diff
               ])
-              ++ builtins.attrValues self.packages.${system};
+              ++ (with self.packages.${system}; [
+                diff-system-closure
+                update-flake-lock
+              ]);
           };
         }
       );

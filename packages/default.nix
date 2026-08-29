@@ -9,4 +9,14 @@
     ];
     text = builtins.readFile ../scripts/diff-system-closure.sh;
   };
+
+  update-flake-lock = pkgs.writeShellApplication {
+    name = "update-flake-lock";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.git
+      pkgs.nix
+    ];
+    text = builtins.readFile ../scripts/update-flake-lock.sh;
+  };
 }
