@@ -6,7 +6,7 @@
       jnoortheen.nix-ide
       mkhl.direnv
       ms-ceintl.vscode-language-pack-ja
-      rust-land.rust-analyzer
+      rust-lang.rust-analyzer
       bungcip.better-toml
     ];
     profiles.default.userSettings = {
