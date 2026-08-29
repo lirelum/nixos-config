@@ -31,10 +31,10 @@
 
       # Desktop & Graphics (OpenGL/Vulkan for renderers/GUI extensions)
       libGL
-      xorg.libX11
-      xorg.libXcursor
-      xorg.libXrandr
-      xorg.libXi
+      libx11
+      libxcursor
+      libxrandr
+      libxi
       wayland
 
       # Internationalization & Encoding
