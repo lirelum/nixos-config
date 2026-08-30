@@ -1,7 +1,13 @@
-{ pkgs, outputs, ... }: {
+{ pkgs, outputs, ... }:
+let
+  username = "autumn";
+in
+{
   imports = [ ../home-manager.nix ];
 
-  users.users.autumn = {
+  my.username = username;
+
+  users.users.${username} = {
     isNormalUser = true;
     description = "Autumn";
     extraGroups = [
@@ -14,7 +20,7 @@
   };
   programs.zsh.enable = true;
 
-  home-manager.users.autumn = {
+  home-manager.users.${username} = {
     imports = with outputs.homeModules; [
       autumn
       cli

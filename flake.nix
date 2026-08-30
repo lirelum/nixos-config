@@ -78,6 +78,8 @@
             gnome
             gaming
             users
+            virtualisation
+            containers
           ]
         );
         teto = lib.mkHost "${self}/hosts/teto" (
@@ -89,6 +91,8 @@
             gnome
             gaming
             users
+            virtualisation
+            containers
           ]
         );
       };
