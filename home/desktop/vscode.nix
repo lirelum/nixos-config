@@ -8,6 +8,10 @@
       ms-ceintl.vscode-language-pack-ja
       rust-lang.rust-analyzer
       tamasfe.even-better-toml
+      ms-python.python
+      ms-python.debugpy
+      ms-python.vscode-pylance
+      ms-python.vscode-python-envs
     ];
     profiles.default.userSettings = {
       "editor.formatOnSave" = true;
