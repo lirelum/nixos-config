@@ -17,6 +17,8 @@
         "sidebar.revamp" = true;
         "sidebar.verticalTabs" = true;
         "sidebar.visibility" = "always-show";
+        "browser.newtabpage.activity-stream.showSponsored" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
       };
       extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
         ublock-origin
