@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,6 +70,17 @@
 
       nixosConfigurations = {
         miku = lib.mkHost "${self}/hosts/miku" (
+          with self.outputs.nixosModules;
+          [
+            audio
+            bluetooth
+            networking
+            gnome
+            gaming
+            users
+          ]
+        );
+        teto = lib.mkHost "${self}/hosts/teto" (
           with self.outputs.nixosModules;
           [
             audio
