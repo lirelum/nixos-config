@@ -12,6 +12,11 @@
       ms-python.debugpy
       ms-python.vscode-pylance
       ms-python.vscode-python-envs
+      ms-toolsai.jupyter
+      ms-toolsai.jupyter-keymap
+      ms-toolsai.jupyter-renderers
+      ms-toolsai.vscode-jupyter-slideshow
+      ms-toolsai.vscode-jupyter-cell-tags
     ];
     profiles.default.userSettings = {
       "editor.formatOnSave" = true;
